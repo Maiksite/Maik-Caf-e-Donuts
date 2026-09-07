@@ -96,7 +96,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, onClose }) 
           </span>
           <h2
             id="modal-product-title"
-            className="text-xl sm:text-2xl font-bold text-[#30221E] leading-tight"
+            className="font-sans text-xl sm:text-2xl font-bold text-[#30221E] leading-tight"
           >
             {product.name}
           </h2>

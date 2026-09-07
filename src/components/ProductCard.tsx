@@ -13,11 +13,11 @@ export const ProductCard: React.FC<ProductCardProps> = React.memo(({ product, on
   return (
     <article
       id={`product-card-${product.id}`}
-      className="group flex flex-col w-full bg-white rounded-[18px] border border-[rgba(74,48,40,0.10)] shadow-[0_6px_20px_rgba(74,48,40,0.04)] hover:shadow-[0_10px_25px_rgba(74,48,40,0.08)] hover:-translate-y-[3px] transition-all duration-300 overflow-hidden"
+      className="group flex flex-col w-full bg-white rounded-[14px] sm:rounded-[18px] border border-[rgba(74,48,40,0.10)] shadow-[0_4px_16px_rgba(74,48,40,0.04)] sm:shadow-[0_6px_20px_rgba(74,48,40,0.04)] hover:shadow-[0_10px_25px_rgba(74,48,40,0.08)] hover:-translate-y-[3px] transition-all duration-300 overflow-hidden"
     >
       {/* Photo Box: Clean studio presentation with balanced framing and soft grounding shadow */}
       <div
-        className="w-full h-[175px] sm:h-[185px] bg-gradient-to-b from-[#FAF8F6]/70 via-[#FFFFFF] to-[#FFFFFF] flex items-center justify-center relative cursor-pointer select-none overflow-hidden"
+        className="w-full h-[135px] sm:h-[185px] bg-gradient-to-b from-[#FAF8F6]/70 via-[#FFFFFF] to-[#FFFFFF] flex items-center justify-center relative cursor-pointer select-none overflow-hidden"
         onClick={() => onOpenModal(product)}
         role="button"
         tabIndex={0}
@@ -36,7 +36,7 @@ export const ProductCard: React.FC<ProductCardProps> = React.memo(({ product, on
         />
 
         {/* Centered Product Photo with balanced spacing and crisp rendering */}
-        <div className="relative z-10 w-full h-full p-2.5 sm:p-3 flex items-center justify-center">
+        <div className="relative z-10 w-full h-full p-2 sm:p-3 flex items-center justify-center">
           <img
             src={product.imageUrl}
             srcSet={
@@ -53,18 +53,18 @@ export const ProductCard: React.FC<ProductCardProps> = React.memo(({ product, on
       </div>
 
       {/* Content Area */}
-      <div className="p-3.5 sm:p-4 flex flex-col flex-1 justify-between gap-3">
+      <div className="p-2.5 sm:p-4 flex flex-col flex-1 justify-between gap-2 sm:gap-3">
         <h3
-          className="text-[15px] sm:text-[16px] font-bold text-[#30221E] leading-snug cursor-pointer hover:text-[#EA789D] transition-colors line-clamp-2 min-h-[42px] flex items-start"
+          className="font-sans text-[13px] sm:text-[16px] font-bold text-[#30221E] leading-snug cursor-pointer hover:text-[#EA789D] transition-colors line-clamp-2 min-h-[36px] sm:min-h-[42px] flex items-start"
           onClick={() => onOpenModal(product)}
         >
           {product.name}
         </h3>
 
         {/* Footer Row: Price + Pedir agora button */}
-        <div className="mt-auto pt-1 flex items-center justify-between gap-2">
+        <div className="mt-auto pt-1 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-2">
           {/* Price: strictly single line, never breaks */}
-          <span className="whitespace-nowrap inline-flex items-center text-[16px] sm:text-[17px] font-extrabold text-[#30221E] tracking-tight">
+          <span className="whitespace-nowrap inline-flex items-center text-[14px] sm:text-[17px] font-extrabold text-[#30221E] tracking-tight">
             {product.price || 'Consulte'}
           </span>
 
@@ -75,7 +75,7 @@ export const ProductCard: React.FC<ProductCardProps> = React.memo(({ product, on
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
-            className="inline-flex items-center justify-center whitespace-nowrap h-[34px] px-3.5 rounded-full bg-[#EA789D] hover:bg-[#DD638A] text-white text-[11px] sm:text-[12px] font-bold border-none transition-all duration-200 hover:-translate-y-px active:scale-95 shrink-0 select-none shadow-2xs"
+            className="inline-flex items-center justify-center whitespace-nowrap h-[30px] sm:h-[34px] px-2.5 sm:px-3.5 rounded-full bg-[#EA789D] hover:bg-[#DD638A] text-white text-[11px] sm:text-[12px] font-bold border-none transition-all duration-200 hover:-translate-y-px active:scale-95 shrink-0 select-none shadow-2xs w-full sm:w-auto"
             aria-label={`Pedir ${product.name} no iFood (abre em nova aba)`}
           >
             Pedir agora ↗

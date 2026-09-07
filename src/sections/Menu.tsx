@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useRef, useEffect } from 'react';
 import { Search, X, AlertCircle } from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
 import { CATEGORIES, PRODUCTS } from '../data/products';
@@ -11,6 +11,14 @@ export const Menu: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeModalProduct, setActiveModalProduct] = useState<Product | null>(null);
   const shouldReduceMotion = useReducedMotion();
+  const categoryScrollRef = useRef<HTMLDivElement>(null);
+
+  // Guarantee that category scroll starts at left: 0 on initial load
+  useEffect(() => {
+    if (categoryScrollRef.current) {
+      categoryScrollRef.current.scrollLeft = 0;
+    }
+  }, []);
 
   const handleOpenModal = useCallback((product: Product) => {
     setActiveModalProduct(product);
@@ -78,7 +86,7 @@ export const Menu: React.FC = () => {
       className="py-16 md:py-24 bg-white relative"
       style={{ backgroundColor: '#FFFFFF' }}
     >
-      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1280px] mx-auto px-3 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-8">
           <h2 className="font-serif font-bold text-3xl sm:text-4xl text-[#30221E] tracking-tight">
@@ -88,7 +96,7 @@ export const Menu: React.FC = () => {
         </div>
 
         {/* Search and Category Filter Section */}
-        <div className="flex flex-col items-center gap-4 max-w-4xl mx-auto mb-8">
+        <div className="flex flex-col items-center gap-4 max-w-6xl mx-auto mb-8">
           {/* Search bar */}
           <div className="w-full max-w-md relative">
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#776966]/60 pointer-events-none" />
@@ -112,26 +120,32 @@ export const Menu: React.FC = () => {
           </div>
 
           {/* Categories Horizontal Pills */}
-          <div className="w-full flex items-center justify-start sm:justify-center overflow-x-auto no-scrollbar py-1 px-1 gap-1.5 sm:gap-2 whitespace-nowrap">
-            {CATEGORIES.map((category) => {
-              const isActive = selectedCategory === category;
-              return (
-                <button
-                  key={category}
-                  id={`tab-${category.toLowerCase().replace(/\s+/g, '-')}`}
-                  onClick={() => setSelectedCategory(category)}
-                  className={`shrink-0 px-3.5 sm:px-4 py-2 rounded-full text-xs font-semibold tracking-wide transition-all duration-200 cursor-pointer ${
-                    isActive
-                      ? 'bg-[#EA789D] text-white border border-transparent shadow-2xs'
-                      : 'bg-white text-[#4A3028] border border-[rgba(74,48,40,0.12)] hover:bg-[#FCEBF1]'
-                  }`}
-                  aria-selected={isActive}
-                  role="tab"
-                >
-                  {category}
-                </button>
-              );
-            })}
+          <div
+            ref={categoryScrollRef}
+            className="w-full overflow-x-auto overflow-y-hidden px-4 sm:px-6 scroll-smooth no-scrollbar"
+            style={{ WebkitOverflowScrolling: 'touch' }}
+          >
+            <div className="flex w-max items-center gap-3 py-2">
+              {CATEGORIES.map((category) => {
+                const isActive = selectedCategory === category;
+                return (
+                  <button
+                    key={category}
+                    id={`tab-${category.toLowerCase().replace(/\s+/g, '-')}`}
+                    onClick={() => setSelectedCategory(category)}
+                    className={`shrink-0 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold tracking-wide transition-all duration-200 cursor-pointer ${
+                      isActive
+                        ? 'bg-[#EA789D] text-white border border-transparent shadow-2xs'
+                        : 'bg-white text-[#4A3028] border border-[rgba(74,48,40,0.12)] hover:bg-[#FCEBF1]'
+                    }`}
+                    aria-selected={isActive}
+                    role="tab"
+                  >
+                    {category}
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
 
@@ -155,14 +169,14 @@ export const Menu: React.FC = () => {
           </div>
         )}
 
-        {/* Products Grid: 5 cols (>=1400px), 4 cols (desktop), 3 cols (notebook), 2 cols (tablet), 1 col (mobile) */}
+        {/* Products Grid: 2 cols (mobile), 2 cols (sm), 3 cols (md), 4 cols (lg), 5 cols (2xl) */}
         {filteredProducts.length > 0 ? (
           <motion.div
             key={selectedCategory + searchQuery}
             initial="hidden"
             animate="visible"
             variants={gridVariants}
-            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-[18px] sm:gap-[20px] max-w-[1280px] mx-auto"
+            className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-3 sm:gap-[20px] max-w-[1280px] mx-auto"
           >
             {filteredProducts.map((product) => (
               <motion.div
