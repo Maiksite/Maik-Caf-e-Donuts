@@ -1,0 +1,8 @@
+{
+  "name": " Maik Café e Donuts",
+  "description": "Site institucional e catálogo digital da Maik Café e Donuts na Zona Norte de SP. Cardápio artesanal, horários, localização e pedidos pelo iFood.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

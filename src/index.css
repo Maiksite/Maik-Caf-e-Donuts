@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-cream: #FAF8F5;
+    --color-surface: #FFFFFF;
+    --color-pink-50: #F8EEF2;
+    --color-pink-100: #F2D8E2;
+    --color-pink-300: #EAA5BA;
+    --color-pink-500: #D97D9E;
+    --color-pink-600: #C95D80;
+    --color-coffee-600: #4A3028;
+    --color-coffee-900: #34251F;
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    background-color: #FAF8F5;
+    color: #34251F;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, .font-serif {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+
+  /* Accessibility focus ring */
+  *:focus-visible {
+    outline: 2px solid #D97D9E;
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
