@@ -38,8 +38,7 @@ export const PRODUCTS: Product[] = [
     category: 'Donuts Roscas',
     description: 'O clássico icônico: calda rosa especial da Maik com confeitos coloridos crocantes sobre massa fofinha.',
     price: 'R$ 16,90',
-    imageUrl:
-      'https://static.ifood-static.com.br/image/upload/t_low/pratos/7a0776d8-35cb-4ca1-a38f-1e273a069651/202606191123_D401_i.jpg',
+    imageUrl: '/homer_real.jpg',
     ifoodUrl:
       'https://www.ifood.com.br/delivery/sao-paulo-sp/maik-cafe-e-donuts-jardim-sao-paulo%28zona-norte%29/7a0776d8-35cb-4ca1-a38f-1e273a069651?prato=b81c3c15-8379-44bb-a5d4-fc1c33b3dd7d',
   },
@@ -149,7 +148,8 @@ export const PRODUCTS: Product[] = [
     name: 'Donuts Doce de Leite Gelado',
     category: 'Donuts Gelados',
     price: 'R$ 22,90',
-    imageUrl: '/donuts-creme-belga-gelado_real.png',
+    imageUrl:
+      'https://static.ifood-static.com.br/image/upload/t_low/pratos/7a0776d8-35cb-4ca1-a38f-1e273a069651/202606191256_UJWY_i.jpg',
     ifoodUrl:
       'https://www.ifood.com.br/delivery/sao-paulo-sp/maik-cafe-e-donuts-jardim-sao-paulo(zona-norte)/7a0776d8-35cb-4ca1-a38f-1e273a069651?prato=f463f865-90cf-437c-9bea-95bb1248b036',
   },
@@ -158,7 +158,8 @@ export const PRODUCTS: Product[] = [
     name: 'Donuts Frutas Vermelhas Gelado',
     category: 'Donuts Gelados',
     price: 'R$ 22,90',
-    imageUrl: '/donuts-creme-belga-gelado_real.png',
+    imageUrl:
+      'https://static.ifood-static.com.br/image/upload/t_low/pratos/7a0776d8-35cb-4ca1-a38f-1e273a069651/202606191258_5B3O_i.jpg',
     ifoodUrl:
       'https://www.ifood.com.br/delivery/sao-paulo-sp/maik-cafe-e-donuts-jardim-sao-paulo(zona-norte)/7a0776d8-35cb-4ca1-a38f-1e273a069651?prato=fc55182f-bd13-4507-979e-3d6e1f001da0',
   },
@@ -167,7 +168,8 @@ export const PRODUCTS: Product[] = [
     name: 'Donuts Creme Belga Gelado',
     category: 'Donuts Gelados',
     price: 'R$ 22,90',
-    imageUrl: '/donuts-creme-belga-gelado_real.png',
+    imageUrl:
+      'https://static.ifood-static.com.br/image/upload/t_low/pratos/7a0776d8-35cb-4ca1-a38f-1e273a069651/202606191256_P1PT_i.jpg',
     ifoodUrl:
       'https://www.ifood.com.br/delivery/sao-paulo-sp/maik-cafe-e-donuts-jardim-sao-paulo(zona-norte)/7a0776d8-35cb-4ca1-a38f-1e273a069651?prato=ab2d830f-5921-4a70-8838-1940e85a560a',
   },
@@ -179,7 +181,8 @@ export const PRODUCTS: Product[] = [
     category: 'Combos',
     description: 'Caixa especial com 6 donuts artesanais sortidos da Maik.',
     price: 'R$ 115,00',
-    imageUrl: '/caixa-donuts-combo.jpg',
+    imageUrl:
+      'https://static.ifood-static.com.br/image/upload/t_low/pratos/7a0776d8-35cb-4ca1-a38f-1e273a069651/202606191259_SK77_i.jpg',
     ifoodUrl:
       'https://www.ifood.com.br/delivery/sao-paulo-sp/maik-cafe-e-donuts-jardim-sao-paulo(zona-norte)/7a0776d8-35cb-4ca1-a38f-1e273a069651?prato=cee2fc4a-625d-4bf1-9bfb-48fc573850bb',
   },
@@ -189,7 +192,8 @@ export const PRODUCTS: Product[] = [
     category: 'Combos',
     description: 'Caixa especial com 12 donuts artesanais sortidos da Maik.',
     price: 'R$ 220,00',
-    imageUrl: '/caixa-donuts-combo.jpg',
+    imageUrl:
+      'https://static.ifood-static.com.br/image/upload/t_low/pratos/7a0776d8-35cb-4ca1-a38f-1e273a069651/202606191259_U6H4_i.jpg',
     ifoodUrl:
       'https://www.ifood.com.br/delivery/sao-paulo-sp/maik-cafe-e-donuts-jardim-sao-paulo(zona-norte)/7a0776d8-35cb-4ca1-a38f-1e273a069651?prato=f9332e2b-4146-4655-b208-7d6187243025',
   },
@@ -344,7 +348,8 @@ export const PRODUCTS: Product[] = [
     category: 'Cafés',
     description: 'Frappé cremoso com pura Nutella batida, chantilly aerado e cobertura generosa.',
     price: 'R$ 35,50',
-    imageUrl: '/frappe-nutella_real.png',
+    imageUrl:
+      'https://static.ifood-static.com.br/image/upload/t_low/pratos/7a0776d8-35cb-4ca1-a38f-1e273a069651/202604271809_048M_i.jpg',
     ifoodUrl:
       'https://www.ifood.com.br/delivery/sao-paulo-sp/maik-cafe-e-donuts-jardim-sao-paulo%28zona-norte%29/7a0776d8-35cb-4ca1-a38f-1e273a069651?prato=186e948d-fefb-4c0a-b054-5348bfbfa268',
   },
@@ -356,7 +361,8 @@ export const PRODUCTS: Product[] = [
     category: 'Achocolatados',
     description: '',
     price: 'R$ 15,50',
-    imageUrl: '/chocolate-quente-pequeno_real.jpg',
+    imageUrl:
+      'https://static.ifood-static.com.br/image/upload/t_low/pratos/7a0776d8-35cb-4ca1-a38f-1e273a069651/202606291621_470M_i.jpg',
     ifoodUrl:
       'https://www.ifood.com.br/delivery/sao-paulo-sp/maik-cafe-e-donuts-jardim-sao-paulo%28zona-norte%29/7a0776d8-35cb-4ca1-a38f-1e273a069651?prato=c8b8d7ad-45ab-46a7-b8b1-ab2862946295',
   },
@@ -386,7 +392,8 @@ export const PRODUCTS: Product[] = [
     category: 'Achocolatados',
     description: '',
     price: 'R$ 32,50',
-    imageUrl: '/chocolate-ovomaltine-gelado_real.png',
+    imageUrl:
+      'https://static.ifood-static.com.br/image/upload/t_low/pratos/7a0776d8-35cb-4ca1-a38f-1e273a069651/202604271811_32K5_i.jpg',
     ifoodUrl:
       'https://www.ifood.com.br/delivery/sao-paulo-sp/maik-cafe-e-donuts-jardim-sao-paulo%28zona-norte%29/7a0776d8-35cb-4ca1-a38f-1e273a069651?prato=20b14200-33be-4c46-833e-ae545c20ac6f',
   },
