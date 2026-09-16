@@ -11,14 +11,14 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
   className = '',
 }) => {
   const status = useStoreStatus();
-
-  // Helper classes based on the 3 official states:
-  // 1. 'open' (Verde)
-  // 2. 'closing-soon' (Amarelo)
-  // 3. 'closed' (Vermelho)
   const isClosingSoon = status.status === 'closing-soon';
   const isOpen = status.status === 'open';
-  const isClosed = status.status === 'closed';
+
+  const pulse = (colorClass: string) => (
+    <span className="relative flex h-full w-full">
+      <span className={`status-ping-once absolute inline-flex h-full w-full rounded-full ${colorClass} opacity-75`} />
+    </span>
+  );
 
   if (layout === 'compact') {
     let containerClass = 'bg-[#F8EEF2] text-[#4A3028] border-rose-200';
@@ -37,16 +37,16 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
 
     return (
       <div
+        role="status"
+        aria-live="polite"
         className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${containerClass} ${className}`}
       >
-        <span className="relative flex h-2 w-2">
-          {pingClass && (
-            <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${pingClass} opacity-75`} />
-          )}
-          <span className={`relative inline-flex rounded-full h-2 w-2 ${dotClass}`} />
+        <span className="relative flex h-2 w-2" aria-hidden="true">
+          {pingClass && pulse(pingClass)}
+          <span className={`absolute inset-0 rounded-full ${dotClass}`} />
         </span>
         <span className="font-semibold">{status.statusText}</span>
-        <span className="opacity-60">•</span>
+        <span className="opacity-60" aria-hidden="true">•</span>
         <span className="opacity-80">{status.subtext}</span>
       </div>
     );
@@ -69,13 +69,13 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
 
     return (
       <div
+        role="status"
+        aria-live="polite"
         className={`inline-flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-white/90 backdrop-blur-md border border-[#F2D8E2]/80 shadow-xs text-sm transition-all hover:border-[#EAA5BA] ${className}`}
       >
-        <span className="relative flex h-3 w-3 shrink-0">
-          {pingClass && (
-            <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${pingClass} opacity-75`} />
-          )}
-          <span className={`relative inline-flex rounded-full h-3 w-3 ${dotClass}`} />
+        <span className="relative flex h-3 w-3 shrink-0" aria-hidden="true">
+          {pingClass && pulse(pingClass)}
+          <span className={`absolute inset-0 rounded-full ${dotClass}`} />
         </span>
         <div className="flex flex-col text-left leading-tight">
           <span className={`font-semibold text-xs tracking-wide uppercase ${titleClass}`}>
@@ -87,7 +87,6 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
     );
   }
 
-  // Detailed layout (used in Horários de Funcionamento section)
   let containerClass = 'bg-rose-50/50 border-rose-200/80 text-[#34251F]';
   let iconBoxClass = 'bg-rose-100/70 text-rose-600';
   let dotClass = 'bg-rose-500';
@@ -116,16 +115,14 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
 
   return (
     <div
+      role="status"
+      aria-live="polite"
       className={`flex items-center gap-4 p-4 rounded-2xl border transition-all ${containerClass} ${className}`}
     >
-      <div
-        className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 ${iconBoxClass}`}
-      >
-        <span className="relative flex h-3.5 w-3.5">
-          {pingClass && (
-            <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${pingClass} opacity-75`} />
-          )}
-          <span className={`relative inline-flex rounded-full h-3.5 w-3.5 ${dotClass}`} />
+      <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 ${iconBoxClass}`}>
+        <span className="relative flex h-3.5 w-3.5" aria-hidden="true">
+          {pingClass && pulse(pingClass)}
+          <span className={`absolute inset-0 rounded-full ${dotClass}`} />
         </span>
       </div>
       <div>
