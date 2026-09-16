@@ -1,6 +1,7 @@
 import React from 'react';
 import { Instagram, ArrowUpRight } from 'lucide-react';
 import { ScrollReveal } from '../components/ScrollReveal';
+import { INSTAGRAM_URL } from '../data/site';
 
 export const InstagramSection: React.FC = () => {
   return (
@@ -28,15 +29,15 @@ export const InstagramSection: React.FC = () => {
             <div className="mt-8 flex justify-center">
               <a
                 id="btn-instagram"
-                href="https://www.instagram.com/maik.cafeedonuts?igsi=MzdpNjNhZ2kyZGtu"
+                href={INSTAGRAM_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram da Maik Café e Donuts"
-                className="inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-full bg-white hover:bg-[#F8EEF2] text-[#34251F] border border-[#F2D8E2] hover:border-[#EAA5BA] font-bold text-sm tracking-wide shadow-xs hover:shadow-md transition-all active:scale-98"
+                className="group inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-full bg-white hover:bg-[#F8EEF2] text-[#34251F] border border-[#F2D8E2] hover:border-[#EAA5BA] font-bold text-sm tracking-wide shadow-xs hover:shadow-md transition-all active:scale-98"
               >
                 <Instagram className="w-4 h-4 text-[#D97D9E]" />
                 <span>VER INSTAGRAM</span>
-                <ArrowUpRight className="w-4 h-4 text-[#4A3028]/60" />
+                <ArrowUpRight className="w-4 h-4 text-[#4A3028]/60 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </a>
             </div>
           </div>
