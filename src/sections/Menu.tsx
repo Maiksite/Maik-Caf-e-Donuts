@@ -13,7 +13,6 @@ export const Menu: React.FC = () => {
   const shouldReduceMotion = useReducedMotion();
   const categoryScrollRef = useRef<HTMLDivElement>(null);
 
-  // Guarantee that category scroll starts at left: 0 on initial load
   useEffect(() => {
     if (categoryScrollRef.current) {
       categoryScrollRef.current.scrollLeft = 0;
@@ -24,7 +23,6 @@ export const Menu: React.FC = () => {
     setActiveModalProduct(product);
   }, []);
 
-  // Filter products by category and search query in real time
   const filteredProducts = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
 
@@ -33,13 +31,12 @@ export const Menu: React.FC = () => {
         selectedCategory === 'Todos' || product.category === selectedCategory;
 
       if (!matchesCategory) return false;
-
       if (!query) return true;
 
-      const matchesName = product.name.toLowerCase().includes(query);
-      const matchesCatName = product.category.toLowerCase().includes(query);
-
-      return matchesName || matchesCatName;
+      return (
+        product.name.toLowerCase().includes(query) ||
+        product.category.toLowerCase().includes(query)
+      );
     });
   }, [selectedCategory, searchQuery]);
 
@@ -50,6 +47,7 @@ export const Menu: React.FC = () => {
         visible: { opacity: 1, transition: { duration: 0 } },
       };
     }
+
     return {
       hidden: { opacity: 0 },
       visible: {
@@ -70,6 +68,7 @@ export const Menu: React.FC = () => {
         visible: { opacity: 1, y: 0, transition: { duration: 0 } },
       };
     }
+
     return {
       hidden: { opacity: 0, y: 4 },
       visible: {
@@ -80,36 +79,39 @@ export const Menu: React.FC = () => {
     };
   }, [shouldReduceMotion]);
 
+  const resetFilters = () => {
+    setSearchQuery('');
+    setSelectedCategory('Todos');
+  };
+
   return (
-    <section
-      id="cardapio"
-      className="py-16 md:py-24 bg-white relative"
-      style={{ backgroundColor: '#FFFFFF' }}
-    >
+    <section id="cardapio" className="py-16 md:py-24 bg-white relative" style={{ backgroundColor: '#FFFFFF' }}>
       <div className="max-w-[1280px] mx-auto px-3 sm:px-6 lg:px-8">
-        {/* Section Header */}
         <div className="text-center mb-8">
           <h2 className="font-serif font-bold text-3xl sm:text-4xl text-[#30221E] tracking-tight">
             Nosso cardápio
           </h2>
-          <div className="w-12 h-1 bg-[#EA789D] rounded-full mx-auto mt-2" />
+          <div className="w-12 h-1 bg-[#EA789D] rounded-full mx-auto mt-2" aria-hidden="true" />
         </div>
 
-        {/* Search and Category Filter Section */}
         <div className="flex flex-col items-center gap-4 max-w-6xl mx-auto mb-8">
-          {/* Search bar */}
           <div className="w-full max-w-md relative">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#776966]/60 pointer-events-none" />
+            <label htmlFor="search-input-menu" className="sr-only">
+              Buscar no cardápio
+            </label>
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#776966]/60 pointer-events-none" aria-hidden="true" />
             <input
               id="search-input-menu"
-              type="text"
+              type="search"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Buscar no cardápio..."
+              autoComplete="off"
               className="w-full pl-10 pr-9 py-2.5 rounded-full bg-white border border-[rgba(74,48,40,0.12)] text-xs sm:text-sm text-[#30221E] placeholder-[#776966]/60 shadow-2xs focus:border-[#EA789D] focus:ring-1 focus:ring-[#EA789D] transition-all outline-none"
             />
             {searchQuery && (
               <button
+                type="button"
                 onClick={() => setSearchQuery('')}
                 className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full text-[#776966] hover:text-[#30221E] hover:bg-[#FCEBF1] transition-colors"
                 aria-label="Limpar busca"
@@ -119,19 +121,25 @@ export const Menu: React.FC = () => {
             )}
           </div>
 
-          {/* Categories Horizontal Pills */}
           <div
             ref={categoryScrollRef}
             className="w-full overflow-x-auto overflow-y-hidden px-4 sm:px-6 scroll-smooth no-scrollbar"
             style={{ WebkitOverflowScrolling: 'touch' }}
           >
-            <div className="flex w-max items-center gap-3 py-2">
+            <div
+              className="flex w-max items-center gap-3 py-2"
+              role="tablist"
+              aria-label="Categorias do cardápio"
+            >
               {CATEGORIES.map((category) => {
                 const isActive = selectedCategory === category;
+                const tabId = `tab-${category.toLowerCase().replace(/\s+/g, '-')}`;
+
                 return (
                   <button
                     key={category}
-                    id={`tab-${category.toLowerCase().replace(/\s+/g, '-')}`}
+                    id={tabId}
+                    type="button"
                     onClick={() => setSelectedCategory(category)}
                     className={`shrink-0 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold tracking-wide transition-all duration-200 cursor-pointer ${
                       isActive
@@ -139,7 +147,9 @@ export const Menu: React.FC = () => {
                         : 'bg-white text-[#4A3028] border border-[rgba(74,48,40,0.12)] hover:bg-[#FCEBF1]'
                     }`}
                     aria-selected={isActive}
+                    aria-controls="catalog-results"
                     role="tab"
+                    tabIndex={isActive ? 0 : -1}
                   >
                     {category}
                   </button>
@@ -149,7 +159,10 @@ export const Menu: React.FC = () => {
           </div>
         </div>
 
-        {/* Results Counter and Filter Reset */}
+        <div className="sr-only" role="status" aria-live="polite">
+          {filteredProducts.length} produtos encontrados
+        </div>
+
         {(selectedCategory !== 'Todos' || searchQuery) && (
           <div className="flex items-center justify-between text-xs text-[#776966] mb-5 pb-2 border-b border-[rgba(74,48,40,0.08)]">
             <span>
@@ -158,10 +171,8 @@ export const Menu: React.FC = () => {
               {searchQuery && ` para "${searchQuery}"`}
             </span>
             <button
-              onClick={() => {
-                setSearchQuery('');
-                setSelectedCategory('Todos');
-              }}
+              type="button"
+              onClick={resetFilters}
               className="text-[#EA789D] hover:text-[#DD638A] font-semibold cursor-pointer transition-colors"
             >
               Ver todos os produtos
@@ -169,9 +180,10 @@ export const Menu: React.FC = () => {
           </div>
         )}
 
-        {/* Products Grid: 2 cols (mobile), 2 cols (sm), 3 cols (md), 4 cols (lg), 5 cols (2xl) */}
         {filteredProducts.length > 0 ? (
           <motion.div
+            id="catalog-results"
+            role="tabpanel"
             key={selectedCategory + searchQuery}
             initial="hidden"
             animate="visible"
@@ -179,22 +191,19 @@ export const Menu: React.FC = () => {
             className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-3 sm:gap-[20px] max-w-[1280px] mx-auto"
           >
             {filteredProducts.map((product) => (
-              <motion.div
-                key={product.id}
-                variants={itemVariants}
-              >
-                <ProductCard
-                  product={product}
-                  onOpenModal={handleOpenModal}
-                />
+              <motion.div key={product.id} variants={itemVariants}>
+                <ProductCard product={product} onOpenModal={handleOpenModal} />
               </motion.div>
             ))}
           </motion.div>
         ) : (
-          /* Empty Search State */
-          <div className="text-center py-12 px-4 rounded-2xl bg-[#FAF8F8] border border-[rgba(74,48,40,0.08)] max-w-md mx-auto my-8">
+          <div
+            id="catalog-results"
+            role="tabpanel"
+            className="text-center py-12 px-4 rounded-2xl bg-[#FAF8F8] border border-[rgba(74,48,40,0.08)] max-w-md mx-auto my-8"
+          >
             <div className="w-10 h-10 rounded-full bg-[#FFF9FB] text-[#EA789D] flex items-center justify-center mx-auto mb-3 border border-[rgba(74,48,40,0.08)]">
-              <AlertCircle className="w-5 h-5" />
+              <AlertCircle className="w-5 h-5" aria-hidden="true" />
             </div>
             <h3 className="font-serif font-bold text-base text-[#30221E]">
               Nenhum produto encontrado
@@ -203,10 +212,8 @@ export const Menu: React.FC = () => {
               Não encontramos resultados para &quot;{searchQuery}&quot;.
             </p>
             <button
-              onClick={() => {
-                setSearchQuery('');
-                setSelectedCategory('Todos');
-              }}
+              type="button"
+              onClick={resetFilters}
               className="mt-3 px-4 py-2 rounded-full bg-[#EA789D] hover:bg-[#DD638A] text-white text-xs font-bold transition-colors"
             >
               Ver todos os produtos
@@ -214,10 +221,10 @@ export const Menu: React.FC = () => {
           </div>
         )}
 
-        {/* Optional Reset / See all products button at bottom if filtered */}
         {selectedCategory !== 'Todos' && filteredProducts.length > 0 && (
           <div className="mt-10 text-center">
             <button
+              type="button"
               onClick={() => setSelectedCategory('Todos')}
               className="inline-flex items-center justify-center px-6 py-2.5 rounded-full bg-white hover:bg-[#FFF9FB] border border-[#EA789D] text-[#EA789D] hover:text-[#DD638A] text-xs font-bold tracking-wider uppercase transition-all duration-200 cursor-pointer shadow-2xs hover:shadow-xs"
             >
@@ -227,11 +234,7 @@ export const Menu: React.FC = () => {
         )}
       </div>
 
-      {/* Accessible Product Modal */}
-      <ProductModal
-        product={activeModalProduct}
-        onClose={() => setActiveModalProduct(null)}
-      />
+      <ProductModal product={activeModalProduct} onClose={() => setActiveModalProduct(null)} />
     </section>
   );
 };
