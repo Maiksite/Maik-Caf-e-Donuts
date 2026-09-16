@@ -1,14 +1,16 @@
 import React from 'react';
 import { Instagram, ExternalLink, MapPin, Clock } from 'lucide-react';
 import { BrandLogo } from '../components/BrandLogo';
-import { IFOOD_STORE_URL, INSTAGRAM_URL } from '../data/products';
+import { IFOOD_STORE_URL } from '../data/products';
+import { INSTAGRAM_URL } from '../data/site';
 
 export const Footer: React.FC = () => {
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer className="bg-[#FAF8F5] border-t border-[#F2D8E2]/80 text-[#4A3028]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
-          {/* Col 1: Brand Info */}
           <div className="md:col-span-5 flex flex-col items-start">
             <BrandLogo size="lg" />
             <p className="mt-4 text-sm text-[#4A3028]/80 leading-relaxed max-w-sm">
@@ -39,37 +41,16 @@ export const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Col 2: Navigation Links */}
           <div className="md:col-span-3">
             <h4 className="font-serif font-bold text-base text-[#34251F] mb-4">
               Links Rápidos
             </h4>
             <ul className="space-y-2.5 text-sm">
-              <li>
-                <a href="#inicio" className="hover:text-[#D97D9E] transition-colors">
-                  Início
-                </a>
-              </li>
-              <li>
-                <a href="#sobre" className="hover:text-[#D97D9E] transition-colors">
-                  Sobre a loja
-                </a>
-              </li>
-              <li>
-                <a href="#cardapio" className="hover:text-[#D97D9E] transition-colors">
-                  Cardápio
-                </a>
-              </li>
-              <li>
-                <a href="#horarios" className="hover:text-[#D97D9E] transition-colors">
-                  Horários
-                </a>
-              </li>
-              <li>
-                <a href="#localizacao" className="hover:text-[#D97D9E] transition-colors">
-                  Localização
-                </a>
-              </li>
+              <li><a href="#inicio" className="hover:text-[#D97D9E] transition-colors">Início</a></li>
+              <li><a href="#cardapio" className="hover:text-[#D97D9E] transition-colors">Cardápio</a></li>
+              <li><a href="#sobre" className="hover:text-[#D97D9E] transition-colors">Sobre a loja</a></li>
+              <li><a href="#horarios" className="hover:text-[#D97D9E] transition-colors">Horários</a></li>
+              <li><a href="#localizacao" className="hover:text-[#D97D9E] transition-colors">Localização</a></li>
               <li>
                 <a
                   href={INSTAGRAM_URL}
@@ -95,7 +76,6 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Col 3: Address & Info */}
           <div className="md:col-span-4">
             <h4 className="font-serif font-bold text-base text-[#34251F] mb-4">
               Localização & Contato
@@ -125,9 +105,8 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* Bottom copyright */}
         <div className="mt-12 pt-6 border-t border-[#F2D8E2] text-center text-xs text-[#4A3028]/70">
-          <p>© 2026 Maik Café e Donuts. Todos os direitos reservados.</p>
+          <p>© {currentYear} Maik Café e Donuts. Todos os direitos reservados.</p>
         </div>
       </div>
     </footer>
