@@ -6,7 +6,6 @@ import { ScrollReveal } from '../components/ScrollReveal';
 export const CtaFinal: React.FC = () => {
   return (
     <section className="py-20 md:py-28 bg-white relative overflow-hidden">
-      {/* Subtle modern soft glow backdrop */}
       <div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[300px] bg-[#F8EEF2] rounded-full blur-3xl -z-10 pointer-events-none"
         aria-hidden="true"
@@ -29,7 +28,7 @@ export const CtaFinal: React.FC = () => {
             </p>
 
             <p className="mt-2 text-sm text-[#4A3028]/70 max-w-md mx-auto">
-              Entregamos na sua casa ou trabalho na Zona Norte com todo o carinho e cuidado da Maik.
+              Consulte no iFood a disponibilidade de entrega para o seu endereço e as condições atuais do pedido.
             </p>
 
             <div className="mt-8 flex justify-center">
@@ -38,10 +37,10 @@ export const CtaFinal: React.FC = () => {
                 href={IFOOD_STORE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-9 py-4 rounded-full bg-[#EA789D] hover:bg-[#DD638A] text-white font-bold text-sm sm:text-base tracking-wider uppercase shadow-md hover:shadow-xl transition-all duration-200 active:scale-95 cursor-pointer"
+                className="group inline-flex items-center justify-center gap-2 px-9 py-4 rounded-full bg-[#EA789D] hover:bg-transparent border border-[#EA789D] text-white hover:text-[#EA789D] font-bold text-sm sm:text-base tracking-wider uppercase shadow-md hover:shadow-sm transition-all duration-300 active:scale-95 cursor-pointer"
               >
                 <span>PEDIR PELO IFOOD</span>
-                <ExternalLink className="w-4 h-4" />
+                <ExternalLink className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </a>
             </div>
           </div>

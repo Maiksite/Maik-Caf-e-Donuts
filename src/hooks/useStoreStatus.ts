@@ -22,19 +22,25 @@ function handleVisibilityChange() {
 
 function subscribe(listener: Listener) {
   listeners.add(listener);
+
   if (listeners.size === 1) {
-    timerId = setInterval(updateStatus, 20000);
+    // Minute-level precision is enough for opening/closing copy and avoids needless work.
+    timerId = setInterval(updateStatus, 60_000);
+
     if (typeof document !== 'undefined') {
       document.addEventListener('visibilitychange', handleVisibilityChange);
     }
   }
+
   return () => {
     listeners.delete(listener);
+
     if (listeners.size === 0) {
       if (timerId) {
         clearInterval(timerId);
         timerId = null;
       }
+
       if (typeof document !== 'undefined') {
         document.removeEventListener('visibilitychange', handleVisibilityChange);
       }

@@ -22,7 +22,6 @@ export const NearbyPlaces: React.FC = () => {
           </div>
         </ScrollReveal>
 
-        {/* 2 Modern reference cards */}
         <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           {NEARBY_PLACES.map((place, idx) => (
             <ScrollReveal key={place.id} delay={idx * 0.15}>
@@ -49,14 +48,8 @@ export const NearbyPlaces: React.FC = () => {
                     {place.referenceText}
                   </p>
 
-                  {/* Distance Indicator */}
-                  <div className="mt-5 p-3 rounded-2xl bg-[#FAF8F5] border border-[#F8EEF2] flex items-center justify-between">
-                    <span className="text-xs text-[#4A3028]/70 font-medium">
-                      Distância até a Maik:
-                    </span>
-                    <span className="text-xs font-bold text-[#34251F]">
-                      {place.estimatedDistanceText || 'Consultar distância no Maps'}
-                    </span>
+                  <div className="mt-5 p-3 rounded-2xl bg-[#FAF8F5] border border-[#F8EEF2] text-xs text-[#4A3028]/75 font-medium">
+                    Distância e tempo de trajeto variam com o trânsito e a rota. Consulte os dados atuais no Google Maps.
                   </div>
                 </div>
 

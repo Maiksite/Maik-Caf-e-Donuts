@@ -1,7 +1,9 @@
 /**
  * Holiday detection for São Paulo - SP, Brazil.
- * Covers National Brazilian holidays, São Paulo State holidays, and São Paulo Municipal holidays,
- * as well as mobile holidays (Easter, Carnival, Good Friday, Corpus Christi).
+ *
+ * This module intentionally distinguishes official holidays from optional dates
+ * such as Carnaval. Store holiday hours should only be applied automatically to
+ * official national, state and municipal holidays.
  */
 
 export interface HolidayInfo {
@@ -9,9 +11,7 @@ export interface HolidayInfo {
   name?: string;
 }
 
-/**
- * Anonymous Gregorian algorithm for calculating Easter Sunday
- */
+/** Anonymous Gregorian algorithm for calculating Easter Sunday. */
 export function getEasterDate(year: number): { month: number; day: number } {
   const a = year % 19;
   const b = Math.floor(year / 100);
@@ -30,13 +30,10 @@ export function getEasterDate(year: number): { month: number; day: number } {
   return { month, day };
 }
 
-/**
- * Returns a map of MM-DD -> Holiday Name for São Paulo/SP for the given year
- */
+/** Returns a map of MM-DD -> official holiday name for São Paulo/SP. */
 export function getSaoPauloHolidaysForYear(year: number): Map<string, string> {
   const map = new Map<string, string>();
 
-  // Fixed National, State & Municipal SP holidays (month: 1-12)
   const fixed: Array<{ month: number; day: number; name: string }> = [
     { month: 1, day: 1, name: 'Confraternização Universal (Ano Novo)' },
     { month: 1, day: 25, name: 'Aniversário de São Paulo' },
@@ -51,46 +48,40 @@ export function getSaoPauloHolidaysForYear(year: number): Map<string, string> {
     { month: 12, day: 25, name: 'Natal' },
   ];
 
-  for (const h of fixed) {
-    const key = `${String(h.month).padStart(2, '0')}-${String(h.day).padStart(2, '0')}`;
-    map.set(key, h.name);
+  for (const holiday of fixed) {
+    const key = `${String(holiday.month).padStart(2, '0')}-${String(holiday.day).padStart(2, '0')}`;
+    map.set(key, holiday.name);
   }
 
-  // Mobile holidays calculated from Easter Sunday
+  // São Paulo also observes Good Friday and Corpus Christi as official holidays.
   const { month: easterMonth, day: easterDay } = getEasterDate(year);
-  const easter = new Date(year, easterMonth - 1, easterDay);
+  const easter = new Date(Date.UTC(year, easterMonth - 1, easterDay, 12));
 
-  const addDays = (d: Date, n: number) => {
-    const res = new Date(d);
-    res.setDate(res.getDate() + n);
-    return res;
+  const addDaysUtc = (date: Date, amount: number) => {
+    const result = new Date(date);
+    result.setUTCDate(result.getUTCDate() + amount);
+    return result;
   };
 
-  const toKey = (d: Date) =>
-    `${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  const toKeyUtc = (date: Date) =>
+    `${String(date.getUTCMonth() + 1).padStart(2, '0')}-${String(date.getUTCDate()).padStart(2, '0')}`;
 
-  const carnaval = addDays(easter, -47); // Terça-feira de Carnaval
-  const sextaSanta = addDays(easter, -2); // Sexta-feira Santa (Paixão de Cristo)
-  const corpusChristi = addDays(easter, 60); // Corpus Christi (Feriado Municipal SP)
+  const goodFriday = addDaysUtc(easter, -2);
+  const corpusChristi = addDaysUtc(easter, 60);
 
-  map.set(toKey(carnaval), 'Carnaval');
-  map.set(toKey(sextaSanta), 'Sexta-feira Santa (Paixão de Cristo)');
-  map.set(toKey(easter), 'Páscoa');
-  map.set(toKey(corpusChristi), 'Corpus Christi');
+  map.set(toKeyUtc(goodFriday), 'Sexta-feira Santa (Paixão de Cristo)');
+  map.set(toKeyUtc(corpusChristi), 'Corpus Christi');
 
   return map;
 }
 
-/**
- * Checks if a given year, month (1-12) and day is an official holiday in São Paulo/SP.
- */
+/** Checks whether a date is an official holiday in São Paulo/SP. */
 export function isHoliday(year: number, month: number, day: number): HolidayInfo {
   const holidays = getSaoPauloHolidaysForYear(year);
   const key = `${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
   const holidayName = holidays.get(key);
 
-  if (holidayName) {
-    return { isHoliday: true, name: holidayName };
-  }
-  return { isHoliday: false };
+  return holidayName
+    ? { isHoliday: true, name: holidayName }
+    : { isHoliday: false };
 }
