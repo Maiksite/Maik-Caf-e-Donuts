@@ -16,11 +16,11 @@ export const ProductCard: React.FC<ProductCardProps> = React.memo(({ product, on
   return (
     <article
       id={`product-card-${product.id}`}
-      className="group flex flex-col w-full bg-white rounded-[14px] sm:rounded-[18px] border border-[rgba(74,48,40,0.10)] shadow-[0_4px_16px_rgba(74,48,40,0.04)] sm:shadow-[0_6px_20px_rgba(74,48,40,0.04)] hover:border-[#EAA5BA]/70 hover:shadow-[0_10px_25px_rgba(74,48,40,0.08)] hover:-translate-y-[3px] transition-[transform,box-shadow,border-color] duration-300 overflow-hidden"
+      className="product-card-touch group flex flex-col w-full bg-white rounded-[14px] sm:rounded-[18px] border border-[rgba(74,48,40,0.10)] shadow-[0_4px_16px_rgba(74,48,40,0.04)] sm:shadow-[0_6px_20px_rgba(74,48,40,0.04)] hover:border-[#EAA5BA]/70 hover:shadow-[0_10px_25px_rgba(74,48,40,0.08)] hover:-translate-y-[3px] transition-[transform,box-shadow,border-color] duration-300 overflow-hidden"
     >
       <button
         type="button"
-        className="w-full h-[135px] sm:h-[185px] bg-gradient-to-b from-[#FAF8F6]/70 via-[#FFFFFF] to-[#FFFFFF] flex items-center justify-center relative cursor-pointer select-none overflow-hidden text-left"
+        className="touch-surface w-full h-[135px] sm:h-[185px] bg-gradient-to-b from-[#FAF8F6]/70 via-[#FFFFFF] to-[#FFFFFF] flex items-center justify-center relative cursor-pointer select-none overflow-hidden text-left"
         onClick={() => onOpenModal(product)}
         aria-label={`Ver detalhes de ${product.name}`}
       >
@@ -52,7 +52,7 @@ export const ProductCard: React.FC<ProductCardProps> = React.memo(({ product, on
           <button
             type="button"
             onClick={() => onOpenModal(product)}
-            className="text-left hover:text-[#EA789D] transition-colors cursor-pointer rounded-sm"
+            className="touch-feedback text-left hover:text-[#EA789D] transition-colors cursor-pointer rounded-sm"
             aria-label={`Abrir detalhes de ${product.name}`}
           >
             {product.name}
@@ -69,7 +69,7 @@ export const ProductCard: React.FC<ProductCardProps> = React.memo(({ product, on
             href={targetUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="group/order inline-flex items-center justify-center gap-1 whitespace-nowrap h-[30px] sm:h-[34px] px-2.5 sm:px-3.5 rounded-full bg-[#EA789D] hover:bg-transparent hover:text-[#EA789D] text-white text-[11px] sm:text-[12px] font-bold border border-[#EA789D] transition-[background-color,color,transform,box-shadow] duration-300 hover:-translate-y-px active:scale-95 shrink-0 select-none shadow-2xs hover:shadow-xs w-full sm:w-auto"
+            className="touch-feedback group/order inline-flex items-center justify-center gap-1 whitespace-nowrap h-[30px] sm:h-[34px] px-2.5 sm:px-3.5 rounded-full bg-[#EA789D] hover:bg-transparent hover:text-[#EA789D] text-white text-[11px] sm:text-[12px] font-bold border border-[#EA789D] transition-[background-color,color,transform,box-shadow] duration-300 hover:-translate-y-px active:scale-[0.98] shrink-0 select-none shadow-2xs hover:shadow-xs w-full sm:w-auto"
             aria-label={`Pedir ${product.name} no iFood (abre em nova aba)`}
           >
             <span>Pedir agora</span>
