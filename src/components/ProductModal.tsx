@@ -84,7 +84,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, onClose }) 
       {product && (
         <motion.div
           key={product.id}
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
+          className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-6"
           role="dialog"
           aria-modal="true"
           aria-labelledby="modal-product-title"
@@ -107,7 +107,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, onClose }) 
           <motion.div
             ref={modalRef}
             tabIndex={-1}
-            className="relative w-full max-w-lg bg-white rounded-[22px] shadow-2xl border border-[rgba(74,48,40,0.12)] overflow-hidden z-10 outline-none"
+            className="relative w-full max-w-lg max-h-[calc(100dvh-1.25rem)] sm:max-h-[calc(100dvh-3rem)] bg-white rounded-[20px] sm:rounded-[22px] shadow-2xl border border-[rgba(74,48,40,0.12)] overflow-x-hidden overflow-y-auto overscroll-contain z-10 outline-none"
             initial={shouldReduceMotion ? false : { opacity: 0, y: 8, scale: 0.995 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 5, scale: 0.995 }}
@@ -117,13 +117,13 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, onClose }) 
               id="btn-close-modal"
               type="button"
               onClick={onClose}
-              className="absolute top-3.5 right-3.5 z-20 w-8 h-8 rounded-full bg-white/90 backdrop-blur-md text-[#30221E] hover:bg-[#FCEBF1] hover:text-[#EA789D] transition-colors flex items-center justify-center shadow-xs cursor-pointer border border-[rgba(74,48,40,0.08)]"
+              className="touch-feedback absolute top-3 right-3 sm:top-3.5 sm:right-3.5 z-20 w-8 h-8 rounded-full bg-white/90 backdrop-blur-md text-[#30221E] hover:bg-[#FCEBF1] hover:text-[#EA789D] transition-colors flex items-center justify-center shadow-xs cursor-pointer border border-[rgba(74,48,40,0.08)]"
               aria-label="Fechar modal"
             >
               <X className="w-4 h-4" />
             </button>
 
-            <div className="w-full h-56 sm:h-64 bg-gradient-to-b from-[#FAF8F6]/80 via-[#FFFFFF] to-[#FFFFFF] flex items-center justify-center relative overflow-hidden">
+            <div className="w-full h-48 sm:h-64 bg-gradient-to-b from-[#FAF8F6]/80 via-[#FFFFFF] to-[#FFFFFF] flex items-center justify-center relative overflow-hidden">
               <div
                 aria-hidden="true"
                 className="absolute bottom-3 left-1/2 -translate-x-1/2 w-[60%] h-3 rounded-[100%] bg-[radial-gradient(ellipse_at_center,_rgba(74,48,40,0.06)_0%,_rgba(74,48,40,0.02)_50%,_transparent_75%)] pointer-events-none"
@@ -150,7 +150,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, onClose }) 
               </span>
             </div>
 
-            <div className="p-5 sm:p-6">
+            <div className="p-4 sm:p-6">
               <span className="inline-block text-[11px] uppercase tracking-wider text-[#EA789D] font-bold mb-1">
                 {product.category}
               </span>
@@ -161,7 +161,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, onClose }) 
                 {product.name}
               </h2>
 
-              <div className="mt-6 pt-5 border-t border-[rgba(74,48,40,0.08)] flex items-center justify-between gap-4">
+              <div className="mt-5 sm:mt-6 pt-4 sm:pt-5 border-t border-[rgba(74,48,40,0.08)] flex items-center justify-between gap-3 sm:gap-4">
                 <div className="flex flex-col">
                   <span className="text-[11px] uppercase tracking-wider text-[#776966] font-medium">
                     Preço
@@ -176,7 +176,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, onClose }) 
                   href={targetUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group/modal-order inline-flex items-center justify-center gap-1.5 whitespace-nowrap h-[42px] px-6 rounded-full bg-[#EA789D] hover:bg-transparent border border-[#EA789D] text-white hover:text-[#EA789D] text-xs sm:text-sm font-bold transition-[background-color,color,transform,box-shadow] duration-300 hover:-translate-y-px active:scale-95 shadow-xs hover:shadow-sm"
+                  className="touch-feedback group/modal-order inline-flex items-center justify-center gap-1.5 whitespace-nowrap h-[40px] sm:h-[42px] px-4 sm:px-6 rounded-full bg-[#EA789D] hover:bg-transparent border border-[#EA789D] text-white hover:text-[#EA789D] text-[11px] min-[360px]:text-xs sm:text-sm font-bold transition-[background-color,color,transform,box-shadow] duration-300 hover:-translate-y-px active:scale-[0.98] shadow-xs hover:shadow-sm"
                 >
                   <span>Pedir agora no iFood</span>
                   <ArrowUpRight
