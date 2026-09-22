@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
-import { X } from 'lucide-react';
+import { ArrowUpRight, X } from 'lucide-react';
 import { Product } from '../types';
 import { IFOOD_STORE_URL } from '../data/products';
 
@@ -77,7 +77,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, onClose }) 
   const targetUrl = product?.ifoodUrl || IFOOD_STORE_URL;
   const transition = shouldReduceMotion
     ? { duration: 0 }
-    : { duration: 0.28, ease: [0.22, 1, 0.36, 1] as const };
+    : { duration: 0.26, ease: [0.22, 1, 0.36, 1] as const };
 
   return (
     <AnimatePresence>
@@ -91,7 +91,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, onClose }) 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.2 }}
+          transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.18 }}
         >
           <motion.button
             type="button"
@@ -101,16 +101,16 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, onClose }) 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.2 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.18 }}
           />
 
           <motion.div
             ref={modalRef}
             tabIndex={-1}
             className="relative w-full max-w-lg bg-white rounded-[22px] shadow-2xl border border-[rgba(74,48,40,0.12)] overflow-hidden z-10 outline-none"
-            initial={shouldReduceMotion ? false : { opacity: 0, y: 10, scale: 0.98 }}
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 8, scale: 0.995 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 6, scale: 0.985 }}
+            exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 5, scale: 0.995 }}
             transition={transition}
           >
             <button
@@ -130,7 +130,9 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, onClose }) 
               />
 
               <div className="relative z-10 w-full h-full p-4 sm:p-5 flex items-center justify-center">
-                <img
+                <motion.img
+                  layoutId={shouldReduceMotion ? undefined : `product-image-${product.id}`}
+                  transition={{ layout: { type: 'spring', stiffness: 390, damping: 34, mass: 0.7 } }}
                   src={product.imageUrl}
                   srcSet={
                     product.imageUrl.includes('/t_low/')
@@ -174,9 +176,13 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, onClose }) 
                   href={targetUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center whitespace-nowrap h-[42px] px-6 rounded-full bg-[#EA789D] hover:bg-[#DD638A] text-white text-xs sm:text-sm font-bold transition-all duration-200 hover:-translate-y-px active:scale-95 shadow-xs"
+                  className="group/modal-order inline-flex items-center justify-center gap-1.5 whitespace-nowrap h-[42px] px-6 rounded-full bg-[#EA789D] hover:bg-transparent border border-[#EA789D] text-white hover:text-[#EA789D] text-xs sm:text-sm font-bold transition-[background-color,color,transform,box-shadow] duration-300 hover:-translate-y-px active:scale-95 shadow-xs hover:shadow-sm"
                 >
-                  Pedir agora no iFood ↗
+                  <span>Pedir agora no iFood</span>
+                  <ArrowUpRight
+                    className="w-3.5 h-3.5 transition-transform duration-200 group-hover/modal-order:translate-x-0.5 group-hover/modal-order:-translate-y-0.5"
+                    aria-hidden="true"
+                  />
                 </a>
               </div>
             </div>
