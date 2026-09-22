@@ -60,6 +60,34 @@
   }
 }
 
+
+@media (hover: none) and (pointer: coarse) {
+  .touch-feedback,
+  .touch-surface {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  .touch-feedback {
+    transition: transform 120ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .touch-feedback:active {
+    transform: scale(0.98);
+  }
+
+  .product-card-touch {
+    transition:
+      transform 140ms cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 300ms ease,
+      border-color 300ms ease;
+  }
+
+  .product-card-touch:has(.touch-surface:active) {
+    transform: scale(0.98);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
     animation-duration: 0.01ms !important;

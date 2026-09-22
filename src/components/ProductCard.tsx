@@ -1,4 +1,6 @@
 import React from 'react';
+import { motion, useReducedMotion } from 'motion/react';
+import { ArrowUpRight } from 'lucide-react';
 import { Product } from '../types';
 import { IFOOD_STORE_URL } from '../data/products';
 
@@ -9,15 +11,16 @@ interface ProductCardProps {
 
 export const ProductCard: React.FC<ProductCardProps> = React.memo(({ product, onOpenModal }) => {
   const targetUrl = product.ifoodUrl || IFOOD_STORE_URL;
+  const shouldReduceMotion = useReducedMotion();
 
   return (
     <article
       id={`product-card-${product.id}`}
-      className="group flex flex-col w-full bg-white rounded-[14px] sm:rounded-[18px] border border-[rgba(74,48,40,0.10)] shadow-[0_4px_16px_rgba(74,48,40,0.04)] sm:shadow-[0_6px_20px_rgba(74,48,40,0.04)] hover:shadow-[0_10px_25px_rgba(74,48,40,0.08)] hover:-translate-y-[3px] transition-all duration-300 overflow-hidden"
+      className="product-card-touch group flex flex-col w-full bg-white rounded-[14px] sm:rounded-[18px] border border-[rgba(74,48,40,0.10)] shadow-[0_4px_16px_rgba(74,48,40,0.04)] sm:shadow-[0_6px_20px_rgba(74,48,40,0.04)] hover:border-[#EAA5BA]/70 hover:shadow-[0_10px_25px_rgba(74,48,40,0.08)] hover:-translate-y-[3px] transition-[transform,box-shadow,border-color] duration-300 overflow-hidden"
     >
       <button
         type="button"
-        className="w-full h-[135px] sm:h-[185px] bg-gradient-to-b from-[#FAF8F6]/70 via-[#FFFFFF] to-[#FFFFFF] flex items-center justify-center relative cursor-pointer select-none overflow-hidden text-left"
+        className="touch-surface w-full h-[135px] sm:h-[185px] bg-gradient-to-b from-[#FAF8F6]/70 via-[#FFFFFF] to-[#FFFFFF] flex items-center justify-center relative cursor-pointer select-none overflow-hidden text-left"
         onClick={() => onOpenModal(product)}
         aria-label={`Ver detalhes de ${product.name}`}
       >
@@ -27,7 +30,9 @@ export const ProductCard: React.FC<ProductCardProps> = React.memo(({ product, on
         />
 
         <div className="relative z-10 w-full h-full p-2 sm:p-3 flex items-center justify-center">
-          <img
+          <motion.img
+            layoutId={shouldReduceMotion ? undefined : `product-image-${product.id}`}
+            transition={{ layout: { type: 'spring', stiffness: 390, damping: 34, mass: 0.7 } }}
             src={product.imageUrl}
             srcSet={
               product.imageUrl.includes('/t_low/')
@@ -37,7 +42,7 @@ export const ProductCard: React.FC<ProductCardProps> = React.memo(({ product, on
             alt={product.name}
             loading="lazy"
             decoding="async"
-            className="max-h-full max-w-full w-auto h-auto object-contain object-center filter contrast-[1.02] brightness-[1.01] group-hover:scale-[1.03] transition-transform duration-300 ease-out pointer-events-none [backface-visibility:hidden] [transform:translateZ(0)]"
+            className="max-h-full max-w-full w-auto h-auto object-contain object-center filter contrast-[1.02] brightness-[1.01] group-hover:scale-[1.035] transition-transform duration-300 ease-out pointer-events-none [backface-visibility:hidden] [transform:translateZ(0)]"
           />
         </div>
       </button>
@@ -47,7 +52,7 @@ export const ProductCard: React.FC<ProductCardProps> = React.memo(({ product, on
           <button
             type="button"
             onClick={() => onOpenModal(product)}
-            className="text-left hover:text-[#EA789D] transition-colors cursor-pointer rounded-sm"
+            className="touch-surface text-left hover:text-[#EA789D] transition-colors cursor-pointer rounded-sm"
             aria-label={`Abrir detalhes de ${product.name}`}
           >
             {product.name}
@@ -64,10 +69,14 @@ export const ProductCard: React.FC<ProductCardProps> = React.memo(({ product, on
             href={targetUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center whitespace-nowrap h-[30px] sm:h-[34px] px-2.5 sm:px-3.5 rounded-full bg-[#EA789D] hover:bg-transparent hover:text-[#EA789D] text-white text-[11px] sm:text-[12px] font-bold border border-[#EA789D] transition-all duration-300 hover:-translate-y-px active:scale-95 shrink-0 select-none shadow-2xs w-full sm:w-auto"
+            className="touch-feedback group/order inline-flex items-center justify-center gap-1 whitespace-nowrap h-[30px] sm:h-[34px] px-2.5 sm:px-3.5 rounded-full bg-[#EA789D] hover:bg-transparent hover:text-[#EA789D] text-white text-[11px] sm:text-[12px] font-bold border border-[#EA789D] transition-[background-color,color,transform,box-shadow] duration-300 hover:-translate-y-px active:scale-[0.98] shrink-0 select-none shadow-2xs hover:shadow-xs w-full sm:w-auto"
             aria-label={`Pedir ${product.name} no iFood (abre em nova aba)`}
           >
-            Pedir agora ↗
+            <span>Pedir agora</span>
+            <ArrowUpRight
+              className="w-3 h-3 transition-transform duration-200 group-hover/order:translate-x-0.5 group-hover/order:-translate-y-0.5"
+              aria-hidden="true"
+            />
           </a>
         </div>
       </div>
