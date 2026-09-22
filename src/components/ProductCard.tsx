@@ -52,7 +52,7 @@ export const ProductCard: React.FC<ProductCardProps> = React.memo(({ product, on
           <button
             type="button"
             onClick={() => onOpenModal(product)}
-            className="touch-feedback text-left hover:text-[#EA789D] transition-colors cursor-pointer rounded-sm"
+            className="touch-surface text-left hover:text-[#EA789D] transition-colors cursor-pointer rounded-sm"
             aria-label={`Abrir detalhes de ${product.name}`}
           >
             {product.name}
