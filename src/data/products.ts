@@ -144,6 +144,17 @@ export const PRODUCTS: Product[] = [
 
   // --- DONUTS GELADOS ---
   {
+    id: 'donut-brigadeiro-trufado-gelado',
+    name: 'Donuts Brigadeiro Trufado Gelado',
+    category: 'Donuts Gelados',
+    description: 'Recheado com brigadeiro trufado e envolto em açúcar gelado.',
+    price: 'R$ 22,90',
+    imageUrl:
+      'https://static.ifood-static.com.br/image/upload/t_low/pratos/7a0776d8-35cb-4ca1-a38f-1e273a069651/202606191257_D6U7_i.jpg',
+    ifoodUrl:
+      'https://www.ifood.com.br/delivery/sao-paulo-sp/maik-cafe-e-donuts-jardim-sao-paulo%28zona-norte%29/7a0776d8-35cb-4ca1-a38f-1e273a069651?prato=ef775123-57cd-4d59-b0ef-4b39cb584d4d',
+  },
+  {
     id: 'donut-doce-de-leite-gelado',
     name: 'Donuts Doce de Leite Gelado',
     category: 'Donuts Gelados',
@@ -199,17 +210,6 @@ export const PRODUCTS: Product[] = [
   },
 
   // --- CAFÉS ---
-  {
-    id: 'mocha-com-nutella',
-    name: 'Mocha com Nutella',
-    category: 'Cafés',
-    description: 'Combinação perfeita de espresso nobre, leite vaporizado e generosa camada de Nutella autêntica.',
-    price: 'R$ 28,50',
-    imageUrl:
-      'https://static.ifood-static.com.br/image/upload/t_low/pratos/7a0776d8-35cb-4ca1-a38f-1e273a069651/202604271812_663X_i.jpg',
-    ifoodUrl:
-      'https://www.ifood.com.br/delivery/sao-paulo-sp/maik-cafe-e-donuts-jardim-sao-paulo%28zona-norte%29/7a0776d8-35cb-4ca1-a38f-1e273a069651?prato=ae65d1c0-0110-45b2-b71d-5570835bdb12',
-  },
   {
     id: 'cappuccino-medio',
     name: 'Cappuccino Médio',
@@ -617,6 +617,17 @@ export const PRODUCTS: Product[] = [
     imageUrl: '/bebidas/h2oh-limao-500ml.jpg',
     ifoodUrl:
       'https://www.ifood.com.br/delivery/sao-paulo-sp/maik-cafe-e-donuts-jardim-sao-paulo(zona-norte)/7a0776d8-35cb-4ca1-a38f-1e273a069651?prato=4e814c43-509e-4e2f-92cb-cb7b14d9d45c',
+  },
+  {
+    id: 'cha-matte-original-leao-450ml',
+    name: 'Chá Matte Original Leão 450ml',
+    category: 'Bebidas',
+    description: 'Embalagem 450ml',
+    price: 'R$ 11,00',
+    imageUrl:
+      'https://static.ifood-static.com.br/image/upload/t_low/pratos/820af392-002c-47b1-bfae-d7ef31743c7f/202510031745_10cd09brdzwf.jpeg',
+    ifoodUrl:
+      'https://www.ifood.com.br/delivery/sao-paulo-sp/maik-cafe-e-donuts-jardim-sao-paulo%28zona-norte%29/7a0776d8-35cb-4ca1-a38f-1e273a069651?prato=b8186bc4-8183-4ff3-a189-53a3a4f0d2f4',
   },
   {
     id: 'cha-matte-limao-leao-450ml',
