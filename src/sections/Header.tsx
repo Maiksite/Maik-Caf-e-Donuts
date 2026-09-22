@@ -23,30 +23,56 @@ const slugify = (value: string) =>
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-|-$/g, '');
 
+const INTERNAL_SECTIONS = NAV_LINKS
+  .filter((link) => !link.external)
+  .map((link) => link.href.slice(1));
+
 export const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [hoveredNav, setHoveredNav] = useState<string | null>(null);
+  const [activeNav, setActiveNav] = useState('inicio');
   const ifoodMagnetic = useMagnetic(6);
 
   useEffect(() => {
     let ticking = false;
 
-    const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const next = window.scrollY > 20;
-          setIsScrolled((prev) => (prev !== next ? next : prev));
-          ticking = false;
-        });
-        ticking = true;
-      }
+    const updateHeaderState = () => {
+      const nextScrolled = window.scrollY > 20;
+      setIsScrolled((prev) => (prev !== nextScrolled ? nextScrolled : prev));
+
+      const markerY = window.scrollY + Math.min(window.innerHeight * 0.34, 320);
+      let currentSection = INTERNAL_SECTIONS[0];
+
+      INTERNAL_SECTIONS.forEach((sectionId) => {
+        const section = document.getElementById(sectionId);
+        if (!section) return;
+
+        const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+        if (sectionTop <= markerY) currentSection = sectionId;
+      });
+
+      setActiveNav((prev) => (prev !== currentSection ? currentSection : prev));
     };
 
-    setIsScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    const handleScroll = () => {
+      if (ticking) return;
 
-    return () => window.removeEventListener('scroll', handleScroll);
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        updateHeaderState();
+        ticking = false;
+      });
+    };
+
+    updateHeaderState();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
   }, []);
 
   useEffect(() => {
@@ -61,6 +87,7 @@ export const Header: React.FC = () => {
   }, [mobileMenuOpen]);
 
   const closeMobileMenu = () => setMobileMenuOpen(false);
+  const highlightedNav = hoveredNav ?? activeNav;
 
   return (
     <header
@@ -77,6 +104,7 @@ export const Header: React.FC = () => {
             href="#inicio"
             className="flex items-center gap-2 group transition-transform duration-200 hover:scale-[1.02]"
             aria-label="Maik Café e Donuts - Voltar ao início"
+            onClick={() => setActiveNav('inicio')}
           >
             <BrandLogo size="md" />
           </a>
@@ -87,13 +115,14 @@ export const Header: React.FC = () => {
             onMouseLeave={() => setHoveredNav(null)}
           >
             {NAV_LINKS.map((link) => {
-              const id = slugify(link.label);
-              const isHovered = hoveredNav === id;
+              const id = link.external ? slugify(link.label) : link.href.slice(1);
+              const isHighlighted = highlightedNav === id;
+              const isCurrentSection = !link.external && activeNav === id;
 
               return (
                 <a
                   key={link.label}
-                  id={`header-nav-${id}`}
+                  id={`header-nav-${slugify(link.label)}`}
                   href={link.href}
                   {...(link.external
                     ? {
@@ -101,15 +130,22 @@ export const Header: React.FC = () => {
                         rel: 'noopener noreferrer',
                         'aria-label': 'Instagram da Maik Café e Donuts',
                       }
-                    : {})}
+                    : {
+                        'aria-current': isCurrentSection ? ('location' as const) : undefined,
+                      })}
                   onMouseEnter={() => setHoveredNav(id)}
-                  className="relative px-3.5 py-1.5 rounded-full text-xs lg:text-sm font-medium text-[#4A3028] hover:text-[#D97D9E] transition-colors"
+                  onClick={() => {
+                    if (!link.external) setActiveNav(id);
+                  }}
+                  className={`relative isolate overflow-hidden px-3.5 py-1.5 rounded-full text-xs lg:text-sm font-medium transition-colors duration-200 ${
+                    isHighlighted ? 'text-[#D97D9E]' : 'text-[#4A3028] hover:text-[#D97D9E]'
+                  }`}
                 >
-                  {isHovered && (
+                  {isHighlighted && (
                     <motion.span
-                      layoutId="header-nav-hover-pill"
-                      className="absolute inset-0 rounded-full bg-[#F8EEF2]/90 pointer-events-none"
-                      transition={{ type: 'spring', stiffness: 360, damping: 32, mass: 0.6 }}
+                      layoutId="header-nav-highlight-pill"
+                      className="absolute inset-0 -z-10 rounded-full bg-[#F8EEF2] pointer-events-none"
+                      transition={{ type: 'spring', stiffness: 420, damping: 34, mass: 0.65 }}
                     />
                   )}
                   <span className="relative z-10">{link.label}</span>
@@ -172,25 +208,39 @@ export const Header: React.FC = () => {
             className="md:hidden fixed inset-x-0 top-[65px] bg-white/98 backdrop-blur-xl border-b border-[#F2D8E2] shadow-xl p-6"
           >
             <nav className="flex flex-col gap-2" aria-label="Navegação mobile">
-              {NAV_LINKS.map((link) => (
-                <a
-                  key={link.label}
-                  id={`mobile-nav-${slugify(link.label)}`}
-                  href={link.href}
-                  {...(link.external
-                    ? {
-                        target: '_blank',
-                        rel: 'noopener noreferrer',
-                        'aria-label': 'Instagram da Maik Café e Donuts',
-                      }
-                    : {})}
-                  onClick={closeMobileMenu}
-                  className="px-4 py-3 rounded-xl text-base font-semibold text-[#34251F] hover:bg-[#F8EEF2] hover:text-[#D97D9E] transition-colors flex items-center justify-between"
-                >
-                  <span>{link.label}</span>
-                  <span className="text-[#EAA5BA] text-sm" aria-hidden="true">→</span>
-                </a>
-              ))}
+              {NAV_LINKS.map((link) => {
+                const sectionId = link.external ? null : link.href.slice(1);
+                const isCurrentSection = sectionId === activeNav;
+
+                return (
+                  <a
+                    key={link.label}
+                    id={`mobile-nav-${slugify(link.label)}`}
+                    href={link.href}
+                    {...(link.external
+                      ? {
+                          target: '_blank',
+                          rel: 'noopener noreferrer',
+                          'aria-label': 'Instagram da Maik Café e Donuts',
+                        }
+                      : {
+                          'aria-current': isCurrentSection ? ('location' as const) : undefined,
+                        })}
+                    onClick={() => {
+                      if (sectionId) setActiveNav(sectionId);
+                      closeMobileMenu();
+                    }}
+                    className={`px-4 py-3 rounded-xl text-base font-semibold transition-colors flex items-center justify-between ${
+                      isCurrentSection
+                        ? 'bg-[#F8EEF2] text-[#D97D9E]'
+                        : 'text-[#34251F] hover:bg-[#F8EEF2] hover:text-[#D97D9E]'
+                    }`}
+                  >
+                    <span>{link.label}</span>
+                    <span className="text-[#EAA5BA] text-sm" aria-hidden="true">→</span>
+                  </a>
+                );
+              })}
 
               <div className="pt-4 mt-2 border-t border-[#F8EEF2]">
                 <a
