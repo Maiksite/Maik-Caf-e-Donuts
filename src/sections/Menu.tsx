@@ -27,6 +27,22 @@ export const Menu: React.FC = () => {
     }
   }, []);
 
+  useEffect(() => {
+    const scrollContainer = categoryScrollRef.current;
+    if (!scrollContainer || !window.matchMedia('(max-width: 767px)').matches) return;
+
+    const activeTab = document.getElementById(getCategoryTabId(selectedCategory));
+    if (!activeTab) return;
+
+    const targetLeft =
+      activeTab.offsetLeft - (scrollContainer.clientWidth - activeTab.offsetWidth) / 2;
+
+    scrollContainer.scrollTo({
+      left: Math.max(0, targetLeft),
+      behavior: shouldReduceMotion ? 'auto' : 'smooth',
+    });
+  }, [selectedCategory, shouldReduceMotion]);
+
   const handleOpenModal = useCallback((product: Product) => {
     setActiveModalProduct(product);
   }, []);
@@ -159,7 +175,7 @@ export const Menu: React.FC = () => {
                       type="button"
                       onClick={() => selectCategory(category)}
                       onKeyDown={(event) => handleCategoryKeyDown(event, category)}
-                      whileTap={shouldReduceMotion ? undefined : { scale: 0.97 }}
+                      whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
                       className={`relative isolate shrink-0 overflow-hidden px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold tracking-wide border transition-[color,border-color,box-shadow] duration-250 cursor-pointer ${
                         isActive
                           ? 'text-white border-transparent shadow-2xs'
@@ -207,7 +223,7 @@ export const Menu: React.FC = () => {
                 <button
                   type="button"
                   onClick={resetFilters}
-                  className="shrink-0 text-[#EA789D] hover:text-[#DD638A] font-semibold cursor-pointer transition-colors"
+                  className="touch-feedback shrink-0 text-[#EA789D] hover:text-[#DD638A] font-semibold cursor-pointer transition-colors"
                 >
                   Ver todos os produtos
                 </button>
@@ -276,7 +292,7 @@ export const Menu: React.FC = () => {
                 <button
                   type="button"
                   onClick={resetFilters}
-                  className="mt-3 px-4 py-2 rounded-full bg-[#EA789D] hover:bg-[#DD638A] text-white text-xs font-bold transition-colors"
+                  className="touch-feedback mt-3 px-4 py-2 rounded-full bg-[#EA789D] hover:bg-[#DD638A] text-white text-xs font-bold transition-colors"
                 >
                   Ver todos os produtos
                 </button>
@@ -297,7 +313,7 @@ export const Menu: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setSelectedCategory('Todos')}
-                  className="inline-flex items-center justify-center px-6 py-2.5 rounded-full bg-white hover:bg-[#FFF9FB] border border-[#EA789D] text-[#EA789D] hover:text-[#DD638A] text-xs font-bold tracking-wider uppercase transition-all duration-200 cursor-pointer shadow-2xs hover:shadow-xs hover:-translate-y-px"
+                  className="touch-feedback inline-flex items-center justify-center px-6 py-2.5 rounded-full bg-white hover:bg-[#FFF9FB] border border-[#EA789D] text-[#EA789D] hover:text-[#DD638A] text-xs font-bold tracking-wider uppercase transition-all duration-200 cursor-pointer shadow-2xs hover:shadow-xs hover:-translate-y-px"
                 >
                   VER TODOS OS PRODUTOS
                 </button>
