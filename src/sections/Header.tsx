@@ -176,7 +176,7 @@ export const Header: React.FC = () => {
               href={IFOOD_STORE_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3 py-1.5 rounded-full bg-[#D97D9E] text-white font-bold text-xs tracking-wider shadow-2xs flex items-center gap-1"
+              className="touch-feedback px-3 py-1.5 rounded-full bg-[#D97D9E] text-white font-bold text-xs tracking-wider shadow-2xs flex items-center gap-1"
             >
               <span>iFood</span>
               <ExternalLink className="w-3 h-3" />
@@ -186,7 +186,7 @@ export const Header: React.FC = () => {
               id="btn-mobile-menu-toggle"
               type="button"
               onClick={() => setMobileMenuOpen((open) => !open)}
-              className="p-2 rounded-xl text-[#34251F] hover:bg-[#F8EEF2] transition-colors focus:outline-none focus:ring-2 focus:ring-[#D97D9E]"
+              className="touch-feedback p-2 rounded-xl text-[#34251F] hover:bg-[#F8EEF2] transition-colors focus:outline-none focus:ring-2 focus:ring-[#D97D9E]"
               aria-label={mobileMenuOpen ? 'Fechar menu de navegação' : 'Abrir menu de navegação'}
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-drawer-menu"
@@ -230,7 +230,7 @@ export const Header: React.FC = () => {
                       if (sectionId) setActiveNav(sectionId);
                       closeMobileMenu();
                     }}
-                    className={`px-4 py-3 rounded-xl text-base font-semibold transition-colors flex items-center justify-between ${
+                    className={`touch-feedback px-4 py-3 rounded-xl text-base font-semibold transition-colors flex items-center justify-between ${
                       isCurrentSection
                         ? 'bg-[#F8EEF2] text-[#D97D9E]'
                         : 'text-[#34251F] hover:bg-[#F8EEF2] hover:text-[#D97D9E]'
@@ -248,7 +248,7 @@ export const Header: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={closeMobileMenu}
-                  className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-2xl bg-[#D97D9E] text-white font-bold text-sm tracking-wide shadow-sm"
+                  className="touch-feedback w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-2xl bg-[#D97D9E] text-white font-bold text-sm tracking-wide shadow-sm"
                 >
                   <span>PEDIR PELO IFOOD</span>
                   <ExternalLink className="w-4 h-4" />
