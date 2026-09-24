@@ -1,4 +1,5 @@
 import React from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import { Header } from './sections/Header';
 import { Hero } from './sections/Hero';
 import { About } from './sections/About';
@@ -52,6 +53,9 @@ export default function App() {
 
       {/* 13. Footer */}
       <Footer />
+
+      {/* Vercel Web Analytics */}
+      <Analytics />
     </div>
   );
 }
