@@ -75,9 +75,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, onClose }) 
   }, [product, onClose]);
 
   const targetUrl = product?.ifoodUrl || IFOOD_STORE_URL;
-  const transition = shouldReduceMotion
-    ? { duration: 0 }
-    : { duration: 0.26, ease: [0.22, 1, 0.36, 1] as const };
+  const fadeTransition = shouldReduceMotion ? { duration: 0 } : { duration: 0.14 };
 
   return (
     <AnimatePresence>
@@ -91,7 +89,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, onClose }) 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.18 }}
+          transition={fadeTransition}
         >
           <motion.button
             type="button"
@@ -101,17 +99,17 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, onClose }) 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.18 }}
+            transition={fadeTransition}
           />
 
           <motion.div
             ref={modalRef}
             tabIndex={-1}
             className="relative w-full max-w-lg max-h-[calc(100dvh-1.25rem)] sm:max-h-[calc(100dvh-3rem)] bg-white rounded-[20px] sm:rounded-[22px] shadow-2xl border border-[rgba(74,48,40,0.12)] overflow-x-hidden overflow-y-auto overscroll-contain z-10 outline-none"
-            initial={shouldReduceMotion ? false : { opacity: 0, y: 8, scale: 0.995 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 5, scale: 0.995 }}
-            transition={transition}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={fadeTransition}
           >
             <button
               id="btn-close-modal"
@@ -130,9 +128,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, onClose }) 
               />
 
               <div className="relative z-10 w-full h-full p-4 sm:p-5 flex items-center justify-center">
-                <motion.img
-                  layoutId={shouldReduceMotion ? undefined : `product-image-${product.id}`}
-                  transition={{ layout: { type: 'spring', stiffness: 390, damping: 34, mass: 0.7 } }}
+                <img
                   src={product.imageUrl}
                   srcSet={
                     product.imageUrl.includes('/t_low/')

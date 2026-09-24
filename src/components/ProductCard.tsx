@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion, useReducedMotion } from 'motion/react';
 import { ArrowUpRight } from 'lucide-react';
 import { Product } from '../types';
 import { IFOOD_STORE_URL } from '../data/products';
@@ -11,12 +10,11 @@ interface ProductCardProps {
 
 export const ProductCard: React.FC<ProductCardProps> = React.memo(({ product, onOpenModal }) => {
   const targetUrl = product.ifoodUrl || IFOOD_STORE_URL;
-  const shouldReduceMotion = useReducedMotion();
 
   return (
     <article
       id={`product-card-${product.id}`}
-      className="product-card-touch group flex flex-col w-full bg-white rounded-[14px] sm:rounded-[18px] border border-[rgba(74,48,40,0.10)] shadow-[0_4px_16px_rgba(74,48,40,0.04)] sm:shadow-[0_6px_20px_rgba(74,48,40,0.04)] hover:border-[#EAA5BA]/70 hover:shadow-[0_10px_25px_rgba(74,48,40,0.08)] hover:-translate-y-[3px] transition-[transform,box-shadow,border-color] duration-300 overflow-hidden"
+      className="group flex flex-col w-full bg-white rounded-[14px] sm:rounded-[18px] border border-[rgba(74,48,40,0.10)] shadow-[0_4px_16px_rgba(74,48,40,0.04)] sm:shadow-[0_6px_20px_rgba(74,48,40,0.04)] overflow-hidden"
     >
       <button
         type="button"
@@ -26,13 +24,11 @@ export const ProductCard: React.FC<ProductCardProps> = React.memo(({ product, on
       >
         <div
           aria-hidden="true"
-          className="absolute bottom-2.5 left-1/2 -translate-x-1/2 w-[65%] h-2.5 rounded-[100%] bg-[radial-gradient(ellipse_at_center,_rgba(74,48,40,0.06)_0%,_rgba(74,48,40,0.02)_50%,_transparent_75%)] pointer-events-none transition-opacity duration-300 group-hover:opacity-75"
+          className="absolute bottom-2.5 left-1/2 -translate-x-1/2 w-[65%] h-2.5 rounded-[100%] bg-[radial-gradient(ellipse_at_center,_rgba(74,48,40,0.06)_0%,_rgba(74,48,40,0.02)_50%,_transparent_75%)] pointer-events-none"
         />
 
         <div className="relative z-10 w-full h-full p-2 sm:p-3 flex items-center justify-center">
-          <motion.img
-            layoutId={shouldReduceMotion ? undefined : `product-image-${product.id}`}
-            transition={{ layout: { type: 'spring', stiffness: 390, damping: 34, mass: 0.7 } }}
+          <img
             src={product.imageUrl}
             srcSet={
               product.imageUrl.includes('/t_low/')
@@ -42,7 +38,7 @@ export const ProductCard: React.FC<ProductCardProps> = React.memo(({ product, on
             alt={product.name}
             loading="lazy"
             decoding="async"
-            className="max-h-full max-w-full w-auto h-auto object-contain object-center filter contrast-[1.02] brightness-[1.01] group-hover:scale-[1.035] transition-transform duration-300 ease-out pointer-events-none [backface-visibility:hidden] [transform:translateZ(0)]"
+            className="max-h-full max-w-full w-auto h-auto object-contain object-center filter contrast-[1.02] brightness-[1.01] pointer-events-none [backface-visibility:hidden]"
           />
         </div>
       </button>
